@@ -14,11 +14,12 @@ class GameTracker:
         #Setup paths using pathlib
         #change the path below to wherever your desired folder is
         #only the part after the '/' needs to be changed.
+        #This will be located on the C: Drive by default.
         self.folder_path = Path.home()/"Desktop"/"Scripts"/"Counters"
         #change the path below to what you would like the name of the output file to be
         #only the part after the '/' needs to be changed. This file will be created
         #in the folder_path folder from above.
-        self.counter_file = self.folder_path/"git_game_tracker.txt"
+        self.counter_file = self.folder_path/"winLossTracker.txt"
 
         #Initial stats (Will be reloaded when program is re-launched)
         #Use the reset_stats key to set everything back to 0
@@ -27,7 +28,6 @@ class GameTracker:
         self.avg_val = 0
 
 
-        
         #Change the increment, decrement, or reset values to what you
         #key you would like (The right side of the : and inside the "")
         self.key_labels = {
@@ -45,7 +45,8 @@ class GameTracker:
         #6: 54  |  7: 55  |  8: 56  |  9: 57  |  0: 48
         
         #Numpad values start at 96 (0) and end at 105 (9)
-        
+        #Edit the left value (the numbers) to your preferred key to CHANGE THE HOTKEYS
+        #list of all VK codes can be found online for further customization. 
         self.keys = {
             105: self.inc_w,      #numpad 9
             104: self.dec_w,      #numpad 8
@@ -158,3 +159,4 @@ if __name__ == "__main__":
         pass
     finally:
         print("\n             Tracker Stopped!")
+
