@@ -9,23 +9,23 @@ from pynput.keyboard import Key, Listener, KeyCode
 #pyinstaller.py --onefile --distpath "dist" git_counter.py
 #                                           ^^^^^^^^^^^^^^ file name if you change it
 
-
 class SimpleCounter:
     def __init__(self):
         #Setup the paths using pathlab
         #change the path below to wherever your desired folder is
         #only the part after the '/' needs to be changed.
+        #This will be located on the C: Drive by default.
         self.folder_path = Path.home()/"Desktop"/"Scripts"/"Counters"
         #change the path below to what you would like the name of the output file to be
         #only the part after the '/' needs to be changed. This file will be created
-        #in the folder_path folder from above.
+        #in the folder_path folder from above. 
         self.counter_file = self.folder_path/"git_counter.txt"
 
         #Initial State (reset to 0 when re-running)
         self.counter_val = 0
 
         #Change the increment, decrement, or reset values to what you
-        #key you would like (The right side of the :)
+        #key you would like (The right side of the : and inside the "")
         self.key_labels = {
             "inc" : "Numpad 7",
             "dec" : "Numpad 4",
@@ -33,11 +33,13 @@ class SimpleCounter:
             }
 
         #Keycode mapping (currently using numpad. If you have no numpad,
-        #                   Change these values to what you would like)
+        #                   Change these values to what you would prefer)
         #Number row values
         #1: 49  |  2: 50  |  3: 51  |  4: 52  |  5: 53
         #6: 54  |  7: 55  |  8: 56  |  9: 57  |  0: 48
         
+        #Numpad values start at 96 (0) and end at 105 (9)
+        #Change the left side (the numbers) of this section to CHANGE THE HOTKEYS
         self.keys = {
             103: self.increment, #numpad 7
             100: self.decrement, #numpad 4
@@ -73,20 +75,16 @@ class SimpleCounter:
     def on_press(self, key):
         #map keys to functions
         vk = getattr(key, 'vk', None)
-
         if vk in self.keys:
             self.keys[vk]()
-
-        #stop listening if ESC pressed [exit program]
-        if key == Key.esc:
-            return False
+            
 
     def start_listening(self):
         #start listening on daemon thread
         listener = Listener(on_press = self.on_press)
         listener.daemon = True #kill thread when program exits
         listener.start()
-        return listener
+        return Listener
 
     def cleanup(self):
         if self.counter_file.exists():
@@ -101,7 +99,7 @@ if __name__ == "__main__":
     print(f"Saving to: {counter.counter_file}")
     print(f"\nHotkeys: {counter.key_labels['inc']} = +1  |  {counter.key_labels['dec']} = -1  |  {counter.key_labels['res']} = Reset")
     print("--------------------------------------------------------------")
-    print("              Press ESC or ENTER to stop...")
+    print("                  Press ENTER to stop...")
     print("--------------------------------------------------------------")
 
     counter.load_counter()
@@ -116,4 +114,4 @@ if __name__ == "__main__":
     finally:
         #If you want the file deleted when closing the application, uncomment the line below
         #counter.cleanup()
-        print("\nCounter Stopped!")
+        print("\n                  Counter Stopped!")
