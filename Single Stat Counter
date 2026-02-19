@@ -55,6 +55,7 @@ class SimpleCounter:
         #make sure directory exists and save the current value
         try:
             self.folder_path.mkdir(parents = True, exist_ok = True)
+            #            EDIT THE 'COUNT' TO WHATEVER IS BEING TRACKED
             self.counter_file.write_text(f"Count = {self.counter_val}")
         except Exception as e:
             print(f" Error saving file: {e}")
@@ -115,3 +116,4 @@ if __name__ == "__main__":
         #If you want the file deleted when closing the application, uncomment the line below
         #counter.cleanup()
         print("\n                  Counter Stopped!")
+
